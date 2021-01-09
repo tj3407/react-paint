@@ -22,6 +22,10 @@
   margin-left: 75px;
 }
 
+.app-header h6 {
+  font-weight: bold;
+}
+
 .app-drawer {
   width: 75px;
 }
@@ -33,4 +37,10 @@
 .drawer-content button {
   width: 60px;
   height: 60px;
+}
+
+.dark-mode-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

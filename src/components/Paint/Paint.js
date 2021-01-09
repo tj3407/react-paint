@@ -1,6 +1,21 @@
 import React from "react";
 
+function useWindowSize() {
+  const [size, setSize] = React.useState([0, 0]);
+  React.useLayoutEffect(() => {
+    function updateSize() {
+      console.log("setting size", window.innerHeight, window.innerWidth);
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+  return size;
+}
+
 function Paint(props) {
+  const [width, height] = useWindowSize();
   const canvas = React.useRef();
   const ctx = React.useRef();
   const lastX = React.useRef(0);
@@ -10,14 +25,23 @@ function Paint(props) {
     isDrawing = false;
 
   React.useEffect(() => {
-    canvas.current.width = window.innerWidth;
-    canvas.current.height = window.innerHeight;
+    draw();
+  }, []);
+
+  React.useEffect(() => {
+    draw();
+  }, [width, height]);
+
+  const draw = () => {
+    console.log(width, height);
+    canvas.current.width = width;
+    canvas.current.height = height;
     ctx.current = canvas.current.getContext("2d");
     ctx.current.strokeStyle = "#BADA55";
     ctx.current.lineJoin = "round";
     ctx.current.lineCap = "round";
     ctx.current.lineWidth = 20;
-  }, []);
+  };
 
   const handleMouseDown = (e) => {
     isDrawing = true;

@@ -27,6 +27,8 @@ import {
   CheckBoxOutlineBlank,
   RadioButtonChecked,
   RadioButtonUnchecked,
+  WbSunny,
+  NightsStay,
 } from "@material-ui/icons";
 
 const themeObject = {
@@ -49,8 +51,8 @@ const dark = {
 
 function App() {
   const themeConfig = createMuiTheme(themeObject);
-  const [theme, setTheme] = React.useState(true);
-  const appliedTheme = createMuiTheme(theme ? light : dark);
+  const [theme, setTheme] = React.useState(false);
+  const appliedTheme = createMuiTheme(theme ? dark : light);
 
   const handleThemeChange = () => {
     setTheme(!theme);
@@ -63,11 +65,19 @@ function App() {
         <AppBar position="fixed" color="inherit" elevation={0}>
           <Toolbar className="app-header">
             <Typography variant="h6">React Paint</Typography>
-            <Switch
-              checked={theme}
-              onChange={handleThemeChange}
-              color="default"
-            />
+            <div className="dark-mode-switch">
+              <div>
+                <WbSunny />
+              </div>
+              <Switch
+                checked={theme}
+                onChange={handleThemeChange}
+                color="default"
+              />
+              <div>
+                <NightsStay />
+              </div>
+            </div>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" PaperProps={{ className: "app-drawer" }}>
