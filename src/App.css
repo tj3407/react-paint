@@ -19,4 +19,18 @@
 
 .app-header {
   justify-content: space-between;
+  margin-left: 75px;
+}
+
+.app-drawer {
+  width: 75px;
+}
+
+.drawer-content {
+  margin-top: 100px;
+}
+
+.drawer-content button {
+  width: 60px;
+  height: 60px;
 }
