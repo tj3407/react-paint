@@ -16,3 +16,7 @@
     transform: rotate(360deg);
   }
 }
+
+.app-header {
+  justify-content: space-between;
+}
