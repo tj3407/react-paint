@@ -1,10 +1,10 @@
-import logo from './logo.svg';
+import Paint from "./components/Paint/Paint";
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <canvas id="paint" />
+      <Paint />
     </div>
   );
 }

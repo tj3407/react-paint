@@ -16,8 +16,3 @@
     transform: rotate(360deg);
   }
 }
-
-#paint {
-  height: 100vh;
-  width: 100vw;
-}
