@@ -4,7 +4,6 @@ function useWindowSize() {
   const [size, setSize] = React.useState([0, 0]);
   React.useLayoutEffect(() => {
     function updateSize() {
-      console.log("setting size", window.innerHeight, window.innerWidth);
       setSize([window.innerWidth, window.innerHeight]);
     }
     window.addEventListener("resize", updateSize);
@@ -30,10 +29,9 @@ function Paint(props) {
 
   React.useEffect(() => {
     draw();
-  }, [width, height]);
+  }, [width, height, props.toggleClear]);
 
   const draw = () => {
-    console.log(width, height);
     canvas.current.width = width;
     canvas.current.height = height;
     ctx.current = canvas.current.getContext("2d");
@@ -66,7 +64,7 @@ function Paint(props) {
         hue = 0;
       }
 
-      if (ctx.current.lineWidth >= 100 || ctx.current.lineWidth <= 1) {
+      if (ctx.current.lineWidth >= 20 || ctx.current.lineWidth <= 1) {
         direction = !direction;
       }
 

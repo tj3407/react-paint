@@ -29,6 +29,7 @@ import {
   RadioButtonUnchecked,
   WbSunny,
   NightsStay,
+  Clear,
 } from "@material-ui/icons";
 
 const themeObject = {
@@ -52,10 +53,15 @@ const dark = {
 function App() {
   const themeConfig = createMuiTheme(themeObject);
   const [theme, setTheme] = React.useState(false);
+  const [toggleClear, setToggleClear] = React.useState(false);
   const appliedTheme = createMuiTheme(theme ? dark : light);
 
   const handleThemeChange = () => {
     setTheme(!theme);
+  };
+
+  const handleClearCanvas = () => {
+    setToggleClear(!toggleClear);
   };
 
   return (
@@ -105,9 +111,12 @@ function App() {
             <IconButton>
               <RadioButtonUnchecked />
             </IconButton>
+            <IconButton onClick={handleClearCanvas}>
+              <Clear />
+            </IconButton>
           </Grid>
         </Drawer>
-        <Paint />
+        <Paint toggleClear={toggleClear} />
       </div>
     </ThemeProvider>
   );
