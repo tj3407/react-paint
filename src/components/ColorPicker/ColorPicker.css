@@ -1,0 +1,11 @@
+.color-input {
+  visibility: hidden;
+}
+
+.color-input input {
+  padding: 0px;
+}
+
+.color-icon {
+  cursor: pointer;
+}

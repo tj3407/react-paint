@@ -14,6 +14,9 @@ import {
   Grid,
   Input,
   InputLabel,
+  List,
+  ListItem,
+  ListItemIcon,
 } from "@material-ui/core";
 import {
   orange,
@@ -27,12 +30,11 @@ import {
   LineWeight,
   Gesture,
   CheckBoxOutlineBlank,
-  RadioButtonChecked,
   RadioButtonUnchecked,
   WbSunny,
   NightsStay,
   Clear,
-  ColorLens,
+  GetAppRounded,
 } from "@material-ui/icons";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
 
@@ -86,6 +88,9 @@ function App() {
         <AppBar position="fixed" color="inherit" elevation={0}>
           <Toolbar className="app-header">
             <Typography variant="h6">React Paint</Typography>
+            <IconButton>
+              <GetAppRounded />
+            </IconButton>
             <div className="dark-mode-switch">
               <div>
                 <WbSunny />
@@ -102,35 +107,75 @@ function App() {
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" PaperProps={{ className: "app-drawer" }}>
-          <Grid
-            container
-            direction="column"
-            alignItems="center"
-            className="drawer-content"
-          >
-            <ColorPicker onColorChange={handleColorChange} />
-            <IconButton onClick={handlePencilClick}>
-              <Create />
-            </IconButton>
-            <IconButton>
-              <Gesture />
-            </IconButton>
-            <IconButton>
-              <Brush />
-            </IconButton>
-            <IconButton>
-              <LineWeight />
-            </IconButton>
-            <IconButton>
-              <CheckBoxOutlineBlank />
-            </IconButton>
-            <IconButton>
-              <RadioButtonUnchecked />
-            </IconButton>
-            <IconButton onClick={handleClearCanvas}>
-              <Clear />
-            </IconButton>
-          </Grid>
+          <List className="drawer-content">
+            <ListItem button className="drawer-content-button">
+              <ColorPicker onColorChange={handleColorChange} />
+            </ListItem>
+            <ListItem
+              button
+              className="drawer-content-button"
+              onClick={handlePencilClick}
+            >
+              <ListItemIcon className="drawer-icon">
+                <Create />
+              </ListItemIcon>
+            </ListItem>
+            <ListItem
+              button
+              className="drawer-content-button"
+              onClick={handlePencilClick}
+            >
+              <ListItemIcon className="drawer-icon">
+                <Gesture />
+              </ListItemIcon>
+            </ListItem>
+            <ListItem
+              button
+              className="drawer-content-button"
+              onClick={handlePencilClick}
+            >
+              <ListItemIcon className="drawer-icon">
+                <Brush />
+              </ListItemIcon>
+            </ListItem>
+            <ListItem
+              button
+              className="drawer-content-button"
+              onClick={handlePencilClick}
+            >
+              <ListItemIcon className="drawer-icon">
+                <LineWeight />
+              </ListItemIcon>
+            </ListItem>
+            <ListItem
+              button
+              className="drawer-content-button"
+              onClick={handlePencilClick}
+            >
+              <ListItemIcon className="drawer-icon">
+                <CheckBoxOutlineBlank />
+              </ListItemIcon>
+            </ListItem>
+            <ListItem
+              button
+              className="drawer-content-button"
+              onClick={handlePencilClick}
+            >
+              <ListItemIcon className="drawer-icon">
+                <RadioButtonUnchecked />
+              </ListItemIcon>
+            </ListItem>
+            <ListItem
+              button
+              className="drawer-content-button"
+              onClick={handleClearCanvas}
+            >
+              <ListItemIcon className="drawer-icon">
+                <Clear />
+              </ListItemIcon>
+            </ListItem>
+          </List>
+          {/* </Grid> */}
         </Drawer>
         <Paint toggleClear={toggleClear} color={color} lineWidth={lineWidth} />
       </div>

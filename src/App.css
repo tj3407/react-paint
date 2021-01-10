@@ -30,33 +30,26 @@
   width: 75px;
 }
 
-.drawer-content {
-  margin-top: 100px;
+ul.drawer-content {
+  margin-top: 75px;
 }
 
-.drawer-content button {
-  width: 60px;
-  height: 60px;
+div.drawer-content-button {
+  justify-content: center;
+}
+
+div.drawer-content-button label {
+  display: flex;
+}
+
+.drawer-icon {
+  min-width: 0px !important;
 }
 
 .dark-mode-switch {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.color-input {
-  visibility: hidden;
-}
-
-.color-icon {
-  display: inline;
-  cursor: pointer;
-  padding: 12px;
-  font-size: 1.5rem;
-  text-align: center;
-  width: 60px;
-  height: 60px;
 }
 
 .pencil {
