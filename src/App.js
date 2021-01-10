@@ -57,6 +57,7 @@ const dark = {
 function App() {
   const themeConfig = createMuiTheme(themeObject);
   const [color, setColor] = React.useState("");
+  const [lineWidth, setlineWidth] = React.useState(0);
   const [theme, setTheme] = React.useState(false);
   const [toggleClear, setToggleClear] = React.useState(false);
   const appliedTheme = createMuiTheme(theme ? dark : light);
@@ -66,11 +67,16 @@ function App() {
   };
 
   const handleClearCanvas = () => {
+    setlineWidth(0);
     setToggleClear(!toggleClear);
   };
 
   const handleColorChange = (color) => {
     setColor(color);
+  };
+
+  const handlePencilClick = () => {
+    setlineWidth(1);
   };
 
   return (
@@ -103,7 +109,7 @@ function App() {
             className="drawer-content"
           >
             <ColorPicker onColorChange={handleColorChange} />
-            <IconButton>
+            <IconButton onClick={handlePencilClick}>
               <Create />
             </IconButton>
             <IconButton>
@@ -126,7 +132,7 @@ function App() {
             </IconButton>
           </Grid>
         </Drawer>
-        <Paint toggleClear={toggleClear} color={color} />
+        <Paint toggleClear={toggleClear} color={color} lineWidth={lineWidth} />
       </div>
     </ThemeProvider>
   );

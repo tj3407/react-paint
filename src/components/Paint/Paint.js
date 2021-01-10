@@ -20,7 +20,6 @@ function Paint(props) {
   const lastX = React.useRef(0);
   const lastY = React.useRef(0);
   let hue = 0,
-    direction = true,
     isDrawing = false;
 
   React.useEffect(() => {
@@ -28,12 +27,20 @@ function Paint(props) {
   }, []);
 
   React.useEffect(() => {
+    canvas.current.className = "";
     draw();
   }, [width, height, props.toggleClear]);
 
   React.useEffect(() => {
     ctx.current.strokeStyle = props.color;
   }, [props.color]);
+
+  React.useEffect(() => {
+    if (props.lineWidth > 0) {
+      canvas.current.classList.add("pencil");
+      ctx.current.lineWidth = props.lineWidth;
+    }
+  }, [props.lineWidth]);
 
   const draw = () => {
     canvas.current.width = width;
@@ -65,16 +72,6 @@ function Paint(props) {
       hue++;
       if (hue >= 360) {
         hue = 0;
-      }
-
-      if (ctx.current.lineWidth >= 20 || ctx.current.lineWidth <= 1) {
-        direction = !direction;
-      }
-
-      if (direction) {
-        ctx.current.lineWidth++;
-      } else {
-        ctx.current.lineWidth--;
       }
     }
   };

@@ -58,3 +58,7 @@
   width: 60px;
   height: 60px;
 }
+
+.pencil {
+  cursor: url("./assets/stop_circle-24px.svg"), auto;
+}
