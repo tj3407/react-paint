@@ -31,11 +31,14 @@ function Paint(props) {
     draw();
   }, [width, height, props.toggleClear]);
 
+  React.useEffect(() => {
+    ctx.current.strokeStyle = props.color;
+  }, [props.color]);
+
   const draw = () => {
     canvas.current.width = width;
     canvas.current.height = height;
     ctx.current = canvas.current.getContext("2d");
-    ctx.current.strokeStyle = "#BADA55";
     ctx.current.lineJoin = "round";
     ctx.current.lineCap = "round";
     ctx.current.lineWidth = 20;
@@ -49,7 +52,7 @@ function Paint(props) {
 
   const handleMouseMove = (e) => {
     if (isDrawing) {
-      ctx.current.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+      //   ctx.current.strokeStyle = `hsl(${hue}, 100%, 50%)`;
       ctx.current.beginPath();
       ctx.current.moveTo(lastX.current, lastY.current);
       ctx.current.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);

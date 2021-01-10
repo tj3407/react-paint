@@ -12,6 +12,8 @@ import {
   Drawer,
   IconButton,
   Grid,
+  Input,
+  InputLabel,
 } from "@material-ui/core";
 import {
   orange,
@@ -30,7 +32,9 @@ import {
   WbSunny,
   NightsStay,
   Clear,
+  ColorLens,
 } from "@material-ui/icons";
+import ColorPicker from "./components/ColorPicker/ColorPicker";
 
 const themeObject = {
   palette: {
@@ -52,6 +56,7 @@ const dark = {
 
 function App() {
   const themeConfig = createMuiTheme(themeObject);
+  const [color, setColor] = React.useState("");
   const [theme, setTheme] = React.useState(false);
   const [toggleClear, setToggleClear] = React.useState(false);
   const appliedTheme = createMuiTheme(theme ? dark : light);
@@ -62,6 +67,10 @@ function App() {
 
   const handleClearCanvas = () => {
     setToggleClear(!toggleClear);
+  };
+
+  const handleColorChange = (color) => {
+    setColor(color);
   };
 
   return (
@@ -93,6 +102,7 @@ function App() {
             alignItems="center"
             className="drawer-content"
           >
+            <ColorPicker onColorChange={handleColorChange} />
             <IconButton>
               <Create />
             </IconButton>
@@ -116,7 +126,7 @@ function App() {
             </IconButton>
           </Grid>
         </Drawer>
-        <Paint toggleClear={toggleClear} />
+        <Paint toggleClear={toggleClear} color={color} />
       </div>
     </ThemeProvider>
   );
