@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/react-paint/static/css/main.f5d99040.chunk.css",
+    "main.js": "/react-paint/static/js/main.445a499a.chunk.js",
+    "main.js.map": "/react-paint/static/js/main.445a499a.chunk.js.map",
+    "runtime-main.js": "/react-paint/static/js/runtime-main.7ff6377b.js",
+    "runtime-main.js.map": "/react-paint/static/js/runtime-main.7ff6377b.js.map",
+    "static/js/2.fb74670b.chunk.js": "/react-paint/static/js/2.fb74670b.chunk.js",
+    "static/js/2.fb74670b.chunk.js.map": "/react-paint/static/js/2.fb74670b.chunk.js.map",
+    "static/js/3.e6f2035c.chunk.js": "/react-paint/static/js/3.e6f2035c.chunk.js",
+    "static/js/3.e6f2035c.chunk.js.map": "/react-paint/static/js/3.e6f2035c.chunk.js.map",
+    "index.html": "/react-paint/index.html",
+    "static/css/main.f5d99040.chunk.css.map": "/react-paint/static/css/main.f5d99040.chunk.css.map",
+    "static/js/2.fb74670b.chunk.js.LICENSE.txt": "/react-paint/static/js/2.fb74670b.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/react-paint/static/media/stop_circle-24px.010312fb.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7ff6377b.js",
+    "static/js/2.fb74670b.chunk.js",
+    "static/css/main.f5d99040.chunk.css",
+    "static/js/main.445a499a.chunk.js"
+  ]
+}
