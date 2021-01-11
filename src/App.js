@@ -11,9 +11,6 @@ import {
   CssBaseline,
   Drawer,
   IconButton,
-  Grid,
-  Input,
-  InputLabel,
   List,
   ListItem,
   ListItemIcon,
@@ -27,7 +24,6 @@ import {
 import {
   Create,
   Brush,
-  LineWeight,
   Gesture,
   CheckBoxOutlineBlank,
   RadioButtonUnchecked,
@@ -37,6 +33,7 @@ import {
   GetAppRounded,
 } from "@material-ui/icons";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
+import LineWeightPicker from "./components/LineWeightPicker/LineWeightPicker";
 
 const themeObject = {
   palette: {
@@ -59,17 +56,22 @@ const dark = {
 function App() {
   const themeConfig = createMuiTheme(themeObject);
   const [color, setColor] = React.useState("");
-  const [lineWidth, setlineWidth] = React.useState(0);
+  const [lineWidth, setlineWidth] = React.useState("");
   const [theme, setTheme] = React.useState(false);
   const [toggleClear, setToggleClear] = React.useState(false);
   const appliedTheme = createMuiTheme(theme ? dark : light);
+
+  // Line weight
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [placement, setPlacement] = React.useState();
 
   const handleThemeChange = () => {
     setTheme(!theme);
   };
 
   const handleClearCanvas = () => {
-    setlineWidth(0);
+    setlineWidth("");
     setToggleClear(!toggleClear);
   };
 
@@ -79,6 +81,12 @@ function App() {
 
   const handlePencilClick = () => {
     setlineWidth(1);
+  };
+
+  const handleLineWeightClick = (newPlacement) => (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen((prev) => placement !== newPlacement || !prev);
+    setPlacement(newPlacement);
   };
 
   return (
@@ -141,10 +149,16 @@ function App() {
             <ListItem
               button
               className="drawer-content-button"
-              onClick={handlePencilClick}
+              onClick={handleLineWeightClick("right")}
             >
               <ListItemIcon className="drawer-icon">
-                <LineWeight />
+                <LineWeightPicker
+                  isOpen={open}
+                  lineWidth={lineWidth}
+                  anchorEl={anchorEl}
+                  placement={placement}
+                  onLineWidthChange={(value) => setlineWidth(value)}
+                />
               </ListItemIcon>
             </ListItem>
             <ListItem
@@ -175,7 +189,6 @@ function App() {
               </ListItemIcon>
             </ListItem>
           </List>
-          {/* </Grid> */}
         </Drawer>
         <Paint toggleClear={toggleClear} color={color} lineWidth={lineWidth} />
       </div>

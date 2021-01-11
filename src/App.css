@@ -55,3 +55,11 @@ div.drawer-content-button label {
 .pencil {
   cursor: url("./assets/stop_circle-24px.svg"), auto;
 }
+
+.lineweight-input {
+  z-index: 1500;
+}
+
+.lineweight-input-paper {
+  padding: 10px;
+}
