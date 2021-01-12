@@ -36,11 +36,19 @@ function Paint(props) {
   }, [props.color]);
 
   React.useEffect(() => {
-    if (props.lineWidth > 0) {
+    if (Number(props.lineWidth) > 0) {
       canvas.current.classList.add("pencil");
       ctx.current.lineWidth = props.lineWidth;
     }
   }, [props.lineWidth]);
+
+  React.useEffect(() => {
+    if (props.isSquare) {
+      canvas.current.classList.add("square");
+    } else {
+      canvas.current.classList.remove("square");
+    }
+  }, [props.isSquare]);
 
   const draw = () => {
     canvas.current.width = width;

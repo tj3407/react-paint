@@ -66,6 +66,9 @@ function App() {
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
 
+  // Square
+  const [isSquare, setIsSquare] = React.useState(false);
+
   const handleThemeChange = () => {
     setTheme(!theme);
   };
@@ -80,13 +83,18 @@ function App() {
   };
 
   const handlePencilClick = () => {
-    setlineWidth(1);
+    setIsSquare(false);
+    setlineWidth("1");
   };
 
   const handleLineWeightClick = (newPlacement) => (event) => {
     setAnchorEl(event.currentTarget);
     setOpen((prev) => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
+  };
+
+  const handleSquareClick = () => {
+    setIsSquare(true);
   };
 
   return (
@@ -164,7 +172,7 @@ function App() {
             <ListItem
               button
               className="drawer-content-button"
-              onClick={handlePencilClick}
+              onClick={handleSquareClick}
             >
               <ListItemIcon className="drawer-icon">
                 <CheckBoxOutlineBlank />
@@ -190,7 +198,12 @@ function App() {
             </ListItem>
           </List>
         </Drawer>
-        <Paint toggleClear={toggleClear} color={color} lineWidth={lineWidth} />
+        <Paint
+          toggleClear={toggleClear}
+          color={color}
+          lineWidth={lineWidth}
+          isSquare={isSquare}
+        />
       </div>
     </ThemeProvider>
   );

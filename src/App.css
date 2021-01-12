@@ -56,6 +56,10 @@ div.drawer-content-button label {
   cursor: url("./assets/stop_circle-24px.svg"), auto;
 }
 
+.square {
+  cursor: crosshair;
+}
+
 .lineweight-input {
   z-index: 1500;
 }
