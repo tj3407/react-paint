@@ -70,27 +70,22 @@ function Paint(props) {
     const textarea = document.createElement("textarea");
 
     textarea.id = "canvas-textarea";
+    textarea.rows = 5;
+    textarea.cols = 30;
     textarea.style.position = "fixed";
     textarea.style.left = x - 4 + "px";
     textarea.style.top = y - 4 + "px";
 
     textarea.onblur = handleInputBlur;
-    textarea.onkeydown = handleKeyDown;
     document.body.appendChild(textarea);
     textarea.focus();
     hasInput = true;
   };
 
-  const handleKeyDown = (e) => {
-    const keyCode = e.keyCode;
-    if (keyCode === 13) {
-      console.log(e.target.value);
-    }
-  };
-
   const handleRemoveInput = (e) => {
     document.body.removeChild(e.target);
     hasInput = false;
+    isWriting = false;
   };
 
   const handleInputBlur = (e) => {
@@ -106,6 +101,7 @@ function Paint(props) {
   function drawText(txtArray, x, y) {
     ctx.current.textBaseline = "top";
     ctx.current.textAlign = "left";
+    ctx.current.fillStyle = props.color;
     txtArray.forEach((txt, i) => ctx.current.fillText(txt, x, y + i * 16));
   }
 

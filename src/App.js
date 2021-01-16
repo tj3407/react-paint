@@ -83,15 +83,19 @@ function App() {
   };
 
   const handleColorChange = (color) => {
+    setIsSquare(false);
+    setIsText(false);
     setColor(color);
   };
 
   const handlePencilClick = () => {
     setIsSquare(false);
+    setIsText(false);
     setlineWidth("1");
   };
 
   const handleTextClick = () => {
+    setIsSquare(false);
     setIsText(true);
   };
 
@@ -102,6 +106,7 @@ function App() {
   };
 
   const handleSquareClick = () => {
+    setIsText(false);
     setIsSquare(true);
   };
 
