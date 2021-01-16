@@ -73,6 +73,9 @@ function App() {
   // Text
   const [isText, setIsText] = React.useState(false);
 
+  // Pencil
+  const [isPencil, setIsPencil] = React.useState(false);
+
   const handleThemeChange = () => {
     setTheme(!theme);
   };
@@ -91,10 +94,12 @@ function App() {
   const handlePencilClick = () => {
     setIsSquare(false);
     setIsText(false);
+    setIsPencil(true);
     setlineWidth("1");
   };
 
   const handleTextClick = () => {
+    setIsPencil(false);
     setIsSquare(false);
     setIsText(true);
   };
@@ -106,6 +111,7 @@ function App() {
   };
 
   const handleSquareClick = () => {
+    setIsPencil(false);
     setIsText(false);
     setIsSquare(true);
   };
@@ -226,6 +232,7 @@ function App() {
           lineWidth={lineWidth}
           isSquare={isSquare}
           isText={isText}
+          isPencil={isPencil}
         />
       </div>
     </ThemeProvider>

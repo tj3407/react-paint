@@ -1,4 +1,5 @@
 import React from "react";
+import { moveCaretToEnd, moveCaretToPosition } from "../../utils/utils";
 
 function useWindowSize() {
   const [size, setSize] = React.useState([0, 0]);
@@ -46,19 +47,21 @@ function Paint(props) {
   }, [props.lineWidth]);
 
   React.useEffect(() => {
+    canvas.current.className = "";
+    isWriting = props.isText;
+
     if (props.isSquare) {
-      canvas.current.className = "";
       canvas.current.classList.add("square");
     }
-  }, [props.isSquare]);
 
-  React.useEffect(() => {
     if (props.isText) {
-      canvas.current.className = "";
       canvas.current.classList.add("text");
-      isWriting = true;
     }
-  }, [props.isText]);
+
+    if (props.isPencil) {
+      canvas.current.classList.add("pencil");
+    }
+  }, [props.isSquare, props.isPencil, props.isText]);
 
   const handleTextClick = (e) => {
     if (!isWriting) return;
@@ -77,15 +80,43 @@ function Paint(props) {
     textarea.style.top = y - 4 + "px";
 
     textarea.onblur = handleInputBlur;
+    textarea.onkeydown = handleKeyDown;
     document.body.appendChild(textarea);
     textarea.focus();
     hasInput = true;
   };
 
+  const handleKeyDown = (e) => {
+    const keyCode = e.keyCode;
+
+    if (keyCode === 9) {
+      e.target.value =
+        e.target.value.slice(0, e.target.selectionStart) +
+        "  " +
+        e.target.value.slice(e.target.selectionStart);
+
+      moveCaretToPosition(e.target, e.target.selectionStart);
+      return false;
+    }
+
+    if (keyCode === 57) {
+      setTimeout(() => {
+        e.target.value += ")";
+        moveCaretToEnd(e.target);
+      }, 0);
+    }
+
+    if (keyCode === 219) {
+      setTimeout(() => {
+        e.target.value += "}";
+        moveCaretToEnd(e.target);
+      }, 0);
+    }
+  };
+
   const handleRemoveInput = (e) => {
     document.body.removeChild(e.target);
     hasInput = false;
-    isWriting = false;
   };
 
   const handleInputBlur = (e) => {
