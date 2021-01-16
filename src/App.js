@@ -31,6 +31,7 @@ import {
   NightsStay,
   Clear,
   GetAppRounded,
+  TextFields,
 } from "@material-ui/icons";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
 import LineWeightPicker from "./components/LineWeightPicker/LineWeightPicker";
@@ -69,6 +70,9 @@ function App() {
   // Square
   const [isSquare, setIsSquare] = React.useState(false);
 
+  // Text
+  const [isText, setIsText] = React.useState(false);
+
   const handleThemeChange = () => {
     setTheme(!theme);
   };
@@ -85,6 +89,10 @@ function App() {
   const handlePencilClick = () => {
     setIsSquare(false);
     setlineWidth("1");
+  };
+
+  const handleTextClick = () => {
+    setIsText(true);
   };
 
   const handleLineWeightClick = (newPlacement) => (event) => {
@@ -157,6 +165,15 @@ function App() {
             <ListItem
               button
               className="drawer-content-button"
+              onClick={handleTextClick}
+            >
+              <ListItemIcon className="drawer-icon">
+                <TextFields />
+              </ListItemIcon>
+            </ListItem>
+            <ListItem
+              button
+              className="drawer-content-button"
               onClick={handleLineWeightClick("right")}
             >
               <ListItemIcon className="drawer-icon">
@@ -203,6 +220,7 @@ function App() {
           color={color}
           lineWidth={lineWidth}
           isSquare={isSquare}
+          isText={isText}
         />
       </div>
     </ThemeProvider>

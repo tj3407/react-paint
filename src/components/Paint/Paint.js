@@ -20,7 +20,9 @@ function Paint(props) {
   const lastX = React.useRef(0);
   const lastY = React.useRef(0);
   let hue = 0,
-    isDrawing = false;
+    isDrawing = false,
+    isWriting = false,
+    hasInput = false;
 
   React.useEffect(() => {
     draw();
@@ -37,6 +39,7 @@ function Paint(props) {
 
   React.useEffect(() => {
     if (Number(props.lineWidth) > 0) {
+      canvas.current.className = "";
       canvas.current.classList.add("pencil");
       ctx.current.lineWidth = props.lineWidth;
     }
@@ -44,11 +47,67 @@ function Paint(props) {
 
   React.useEffect(() => {
     if (props.isSquare) {
+      canvas.current.className = "";
       canvas.current.classList.add("square");
-    } else {
-      canvas.current.classList.remove("square");
     }
   }, [props.isSquare]);
+
+  React.useEffect(() => {
+    if (props.isText) {
+      canvas.current.className = "";
+      canvas.current.classList.add("text");
+      isWriting = true;
+    }
+  }, [props.isText]);
+
+  const handleTextClick = (e) => {
+    if (!isWriting) return;
+
+    write(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+  };
+
+  const write = (x, y) => {
+    const textarea = document.createElement("textarea");
+
+    textarea.id = "canvas-textarea";
+    textarea.style.position = "fixed";
+    textarea.style.left = x - 4 + "px";
+    textarea.style.top = y - 4 + "px";
+
+    textarea.onblur = handleInputBlur;
+    textarea.onkeydown = handleKeyDown;
+    document.body.appendChild(textarea);
+    textarea.focus();
+    hasInput = true;
+  };
+
+  const handleKeyDown = (e) => {
+    const keyCode = e.keyCode;
+    if (keyCode === 13) {
+      console.log(e.target.value);
+    }
+  };
+
+  const handleRemoveInput = (e) => {
+    document.body.removeChild(e.target);
+    hasInput = false;
+  };
+
+  const handleInputBlur = (e) => {
+    const textArray = e.target.value.split("\n");
+    drawText(
+      textArray,
+      parseInt(e.target.style.left, 10),
+      parseInt(e.target.style.top, 10)
+    );
+    handleRemoveInput(e);
+  };
+
+  function drawText(txtArray, x, y) {
+    ctx.current.textBaseline = "top";
+    ctx.current.textAlign = "left";
+    txtArray.forEach((txt, i) => ctx.current.fillText(txt, x, y + i * 16));
+  }
 
   const draw = () => {
     canvas.current.width = width;
@@ -56,6 +115,7 @@ function Paint(props) {
     ctx.current = canvas.current.getContext("2d");
     ctx.current.lineJoin = "round";
     ctx.current.lineCap = "round";
+    ctx.current.font = "16px Arial";
     ctx.current.lineWidth = 20;
   };
 
@@ -66,7 +126,7 @@ function Paint(props) {
   };
 
   const handleMouseMove = (e) => {
-    if (isDrawing) {
+    if (isDrawing && !isWriting) {
       //   ctx.current.strokeStyle = `hsl(${hue}, 100%, 50%)`;
       ctx.current.beginPath();
       ctx.current.moveTo(lastX.current, lastY.current);
@@ -96,6 +156,7 @@ function Paint(props) {
         onMouseOut={() => (isDrawing = false)}
         onMouseMove={handleMouseMove}
         onTouchMove={handleMouseMove}
+        onClick={handleTextClick}
       />
     </div>
   );

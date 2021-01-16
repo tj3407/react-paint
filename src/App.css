@@ -60,6 +60,10 @@ div.drawer-content-button label {
   cursor: crosshair;
 }
 
+.text {
+  cursor: text;
+}
+
 .lineweight-input {
   z-index: 1500;
 }
