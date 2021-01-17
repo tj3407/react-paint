@@ -71,3 +71,11 @@ div.drawer-content-button label {
 .lineweight-input-paper {
   padding: 10px;
 }
+
+.selected-dark {
+  border-left: 6px solid #ff9800 !important;
+}
+
+.selected {
+  border-left: 6px solid !important;
+}

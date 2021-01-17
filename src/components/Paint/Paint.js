@@ -99,17 +99,23 @@ function Paint(props) {
       return false;
     }
 
-    if (keyCode === 57) {
+    if (keyCode === 57 && e.shiftKey) {
       setTimeout(() => {
-        e.target.value += ")";
-        moveCaretToEnd(e.target);
+        e.target.value =
+          e.target.value.slice(0, e.target.selectionStart) +
+          ")" +
+          e.target.value.slice(e.target.selectionStart);
+        moveCaretToPosition(e.target, e.target.selectionStart + 1);
       }, 0);
     }
 
-    if (keyCode === 219) {
+    if (keyCode === 219 && e.shiftKey) {
       setTimeout(() => {
-        e.target.value += "}";
-        moveCaretToEnd(e.target);
+        e.target.value =
+          e.target.value.slice(0, e.target.selectionStart) +
+          "}" +
+          e.target.value.slice(e.target.selectionStart);
+        moveCaretToPosition(e.target, e.target.selectionStart + 1);
       }, 0);
     }
   };

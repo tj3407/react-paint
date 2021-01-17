@@ -1,5 +1,4 @@
 import React from "react";
-import { createMuiTheme } from "@material-ui/core/styles";
 import Paint from "./components/Paint/Paint";
 import "./App.css";
 import {
@@ -16,12 +15,6 @@ import {
   ListItemIcon,
 } from "@material-ui/core";
 import {
-  orange,
-  lightBlue,
-  deepPurple,
-  deepOrange,
-} from "@material-ui/core/colors";
-import {
   Create,
   Brush,
   Gesture,
@@ -35,32 +28,25 @@ import {
 } from "@material-ui/icons";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
 import LineWeightPicker from "./components/LineWeightPicker/LineWeightPicker";
+import { getTheme } from "./theme/theme";
 
-const themeObject = {
-  palette: {
-    type: "dark",
-  },
-};
-
-const light = {
-  palette: {
-    type: "light",
-  },
-};
-
-const dark = {
-  palette: {
-    type: "dark",
-  },
+const originalSelection = {
+  color: false,
+  pencil: false,
+  curve: false,
+  brush: false,
+  text: false,
+  lineWidth: false,
+  square: false,
+  circle: false,
 };
 
 function App() {
-  const themeConfig = createMuiTheme(themeObject);
   const [color, setColor] = React.useState("");
   const [lineWidth, setlineWidth] = React.useState("");
   const [theme, setTheme] = React.useState(false);
   const [toggleClear, setToggleClear] = React.useState(false);
-  const appliedTheme = createMuiTheme(theme ? dark : light);
+  const [selection, setSelection] = React.useState(originalSelection);
 
   // Line weight
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -81,6 +67,7 @@ function App() {
   };
 
   const handleClearCanvas = () => {
+    setSelection({ ...originalSelection });
     setlineWidth("");
     setToggleClear(!toggleClear);
   };
@@ -92,6 +79,7 @@ function App() {
   };
 
   const handlePencilClick = () => {
+    setSelection({ ...originalSelection, pencil: true });
     setIsSquare(false);
     setIsText(false);
     setIsPencil(true);
@@ -99,28 +87,35 @@ function App() {
   };
 
   const handleTextClick = () => {
+    setSelection({ ...originalSelection, text: true });
     setIsPencil(false);
     setIsSquare(false);
     setIsText(true);
   };
 
   const handleLineWeightClick = (newPlacement) => (event) => {
+    setSelection({ ...originalSelection, lineWidth: true });
     setAnchorEl(event.currentTarget);
     setOpen((prev) => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
   };
 
   const handleSquareClick = () => {
+    setSelection({ ...originalSelection, square: true });
     setIsPencil(false);
     setIsText(false);
     setIsSquare(true);
   };
 
+  const handleColorClick = (e) => {
+    setSelection({ ...originalSelection, color: true });
+  };
+
   return (
-    <ThemeProvider theme={appliedTheme}>
+    <ThemeProvider theme={getTheme(theme)}>
       <CssBaseline />
       <div className="App">
-        <AppBar position="fixed" color="inherit" elevation={0}>
+        <AppBar position="fixed" color="primary" elevation={0}>
           <Toolbar className="app-header">
             <Typography variant="h6">React Paint</Typography>
             <IconButton>
@@ -141,15 +136,29 @@ function App() {
             </div>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" PaperProps={{ className: "app-drawer" }}>
+        <Drawer
+          variant="permanent"
+          PaperProps={{ className: "app-drawer" }}
+          color="primary"
+        >
           <List className="drawer-content">
-            <ListItem button className="drawer-content-button">
+            <ListItem
+              button
+              className={`drawer-content-button ${
+                selection.color ? (theme ? "selected-dark" : "selected") : ""
+              }`}
+              onClick={handleColorClick}
+              selected={selection.color}
+            >
               <ColorPicker onColorChange={handleColorChange} />
             </ListItem>
             <ListItem
               button
-              className="drawer-content-button"
+              className={`drawer-content-button ${
+                selection.pencil ? (theme ? "selected-dark" : "selected") : ""
+              }`}
               onClick={handlePencilClick}
+              selected={selection.pencil}
             >
               <ListItemIcon className="drawer-icon">
                 <Create />
@@ -157,8 +166,13 @@ function App() {
             </ListItem>
             <ListItem
               button
-              className="drawer-content-button"
-              onClick={handlePencilClick}
+              className={`drawer-content-button ${
+                selection.curve ? (theme ? "selected-dark" : "selected") : ""
+              }`}
+              onClick={() =>
+                setSelection({ ...originalSelection, curve: true })
+              }
+              selected={selection.curve}
             >
               <ListItemIcon className="drawer-icon">
                 <Gesture />
@@ -166,8 +180,13 @@ function App() {
             </ListItem>
             <ListItem
               button
-              className="drawer-content-button"
-              onClick={handlePencilClick}
+              className={`drawer-content-button ${
+                selection.brush ? (theme ? "selected-dark" : "selected") : ""
+              }`}
+              onClick={() =>
+                setSelection({ ...originalSelection, brush: true })
+              }
+              selected={selection.brush}
             >
               <ListItemIcon className="drawer-icon">
                 <Brush />
@@ -175,8 +194,11 @@ function App() {
             </ListItem>
             <ListItem
               button
-              className="drawer-content-button"
+              className={`drawer-content-button ${
+                selection.text ? (theme ? "selected-dark" : "selected") : ""
+              }`}
               onClick={handleTextClick}
+              selected={selection.text}
             >
               <ListItemIcon className="drawer-icon">
                 <TextFields />
@@ -184,8 +206,15 @@ function App() {
             </ListItem>
             <ListItem
               button
-              className="drawer-content-button"
+              className={`drawer-content-button ${
+                selection.lineWidth
+                  ? theme
+                    ? "selected-dark"
+                    : "selected"
+                  : ""
+              }`}
               onClick={handleLineWeightClick("right")}
+              selected={selection.lineWidth}
             >
               <ListItemIcon className="drawer-icon">
                 <LineWeightPicker
@@ -199,8 +228,11 @@ function App() {
             </ListItem>
             <ListItem
               button
-              className="drawer-content-button"
+              className={`drawer-content-button ${
+                selection.square ? (theme ? "selected-dark" : "selected") : ""
+              }`}
               onClick={handleSquareClick}
+              selected={selection.square}
             >
               <ListItemIcon className="drawer-icon">
                 <CheckBoxOutlineBlank />
@@ -208,8 +240,13 @@ function App() {
             </ListItem>
             <ListItem
               button
-              className="drawer-content-button"
-              onClick={handlePencilClick}
+              className={`drawer-content-button ${
+                selection.circle ? (theme ? "selected-dark" : "selected") : ""
+              }`}
+              onClick={() =>
+                setSelection({ ...originalSelection, circle: true })
+              }
+              selected={selection.circle}
             >
               <ListItemIcon className="drawer-icon">
                 <RadioButtonUnchecked />
@@ -217,7 +254,7 @@ function App() {
             </ListItem>
             <ListItem
               button
-              className="drawer-content-button"
+              className={`drawer-content-button`}
               onClick={handleClearCanvas}
             >
               <ListItemIcon className="drawer-icon">
@@ -233,6 +270,7 @@ function App() {
           isSquare={isSquare}
           isText={isText}
           isPencil={isPencil}
+          theme={theme}
         />
       </div>
     </ThemeProvider>
