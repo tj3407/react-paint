@@ -20,8 +20,10 @@ function Paint(props) {
   const ctx = React.useRef();
   const lastX = React.useRef(0);
   const lastY = React.useRef(0);
+  const rect = React.useRef({});
   let hue = 0,
     isDrawing = false,
+    isDrawingSquare = false,
     isWriting = false,
     hasInput = false;
 
@@ -49,6 +51,7 @@ function Paint(props) {
   React.useEffect(() => {
     canvas.current.className = "";
     isWriting = props.isText;
+    isDrawingSquare = props.isSquare;
 
     if (props.isSquare) {
       canvas.current.classList.add("square");
@@ -152,14 +155,48 @@ function Paint(props) {
     ctx.current.lineWidth = 20;
   };
 
+  const drawSquare = (e) => {
+    // ctx.current.drawImage(imageObj, 0, 0);
+    rect.current.w = e.nativeEvent.offsetX - rect.current.startX;
+    rect.current.h = e.nativeEvent.offsetY - rect.current.startY;
+    // ctx.current.strokeStyle = props.color;
+    console.log(e.nativeEvent);
+    let deltaX;
+    let deltaY;
+    let deltaW;
+    let deltaH;
+    ctx.current.clearRect(
+      rect.current.startX - ctx.current.lineWidth,
+      rect.current.startY - ctx.current.lineWidth,
+      rect.current.w + ctx.current.lineWidth,
+      rect.current.h + ctx.current.lineWidth
+    );
+
+    console.log(ctx.current);
+    ctx.current.strokeRect(
+      rect.current.startX,
+      rect.current.startY,
+      rect.current.w,
+      rect.current.h
+    );
+  };
+
   const handleMouseDown = (e) => {
     isDrawing = true;
     lastX.current = e.nativeEvent.offsetX;
     lastY.current = e.nativeEvent.offsetY;
+
+    if (isDrawingSquare) {
+      console.log(e);
+      rect.current.startX = e.nativeEvent.offsetX;
+      rect.current.startY = e.nativeEvent.offsetY;
+    }
   };
 
   const handleMouseMove = (e) => {
-    if (isDrawing && !isWriting) {
+    if (isDrawingSquare && isDrawing) {
+      drawSquare(e);
+    } else if (isDrawing && !isWriting) {
       //   ctx.current.strokeStyle = `hsl(${hue}, 100%, 50%)`;
       ctx.current.beginPath();
       ctx.current.moveTo(lastX.current, lastY.current);
