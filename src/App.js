@@ -46,7 +46,10 @@ function App() {
   const [lineWidth, setlineWidth] = React.useState("");
   const [theme, setTheme] = React.useState(false);
   const [toggleClear, setToggleClear] = React.useState(false);
-  const [selection, setSelection] = React.useState(originalSelection);
+  const [selection, setSelection] = React.useState({
+    ...originalSelection,
+    pencil: true,
+  });
 
   // Line weight
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -107,10 +110,6 @@ function App() {
     setIsSquare(true);
   };
 
-  const handleColorClick = (e) => {
-    setSelection({ ...originalSelection, color: true });
-  };
-
   return (
     <ThemeProvider theme={getTheme(theme)}>
       <CssBaseline />
@@ -142,14 +141,7 @@ function App() {
           color="primary"
         >
           <List className="drawer-content">
-            <ListItem
-              button
-              className={`drawer-content-button ${
-                selection.color ? (theme ? "selected-dark" : "selected") : ""
-              }`}
-              onClick={handleColorClick}
-              selected={selection.color}
-            >
+            <ListItem button className={`drawer-content-button`}>
               <ColorPicker onColorChange={handleColorChange} />
             </ListItem>
             <ListItem
@@ -267,9 +259,9 @@ function App() {
           toggleClear={toggleClear}
           color={color}
           lineWidth={lineWidth}
-          isSquare={isSquare}
-          isText={isText}
-          isPencil={isPencil}
+          isSquare={selection.square}
+          isText={selection.text}
+          isPencil={selection.pencil}
           theme={theme}
         />
       </div>
