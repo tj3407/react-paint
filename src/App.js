@@ -36,7 +36,6 @@ const originalSelection = {
   curve: false,
   brush: false,
   text: false,
-  lineWidth: false,
   square: false,
   circle: false,
 };
@@ -97,7 +96,6 @@ function App() {
   };
 
   const handleLineWeightClick = (newPlacement) => (event) => {
-    setSelection({ ...originalSelection, lineWidth: true });
     setAnchorEl(event.currentTarget);
     setOpen((prev) => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
@@ -143,6 +141,28 @@ function App() {
           <List className="drawer-content">
             <ListItem button className={`drawer-content-button`}>
               <ColorPicker onColorChange={handleColorChange} />
+            </ListItem>
+            <ListItem
+              button
+              className={`drawer-content-button ${
+                selection.lineWidth
+                  ? theme
+                    ? "selected-dark"
+                    : "selected"
+                  : ""
+              }`}
+              onClick={handleLineWeightClick("right")}
+              selected={selection.lineWidth}
+            >
+              <ListItemIcon className="drawer-icon">
+                <LineWeightPicker
+                  isOpen={open}
+                  lineWidth={lineWidth}
+                  anchorEl={anchorEl}
+                  placement={placement}
+                  onLineWidthChange={(value) => setlineWidth(value)}
+                />
+              </ListItemIcon>
             </ListItem>
             <ListItem
               button
@@ -194,28 +214,6 @@ function App() {
             >
               <ListItemIcon className="drawer-icon">
                 <TextFields />
-              </ListItemIcon>
-            </ListItem>
-            <ListItem
-              button
-              className={`drawer-content-button ${
-                selection.lineWidth
-                  ? theme
-                    ? "selected-dark"
-                    : "selected"
-                  : ""
-              }`}
-              onClick={handleLineWeightClick("right")}
-              selected={selection.lineWidth}
-            >
-              <ListItemIcon className="drawer-icon">
-                <LineWeightPicker
-                  isOpen={open}
-                  lineWidth={lineWidth}
-                  anchorEl={anchorEl}
-                  placement={placement}
-                  onLineWidthChange={(value) => setlineWidth(value)}
-                />
               </ListItemIcon>
             </ListItem>
             <ListItem

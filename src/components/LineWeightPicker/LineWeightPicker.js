@@ -53,6 +53,7 @@ const LineWeightPicker = ({
                     defaultValue={lineWidth}
                     inputProps={{
                       min: 1,
+                      max: 20,
                     }}
                   />
                 </Paper>
